@@ -1,0 +1,3 @@
+[submodule "dockerspawner"]
+	path = dockerspawner
+	url = git@github.com:jhamrick/dockerspawner.git
