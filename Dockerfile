@@ -1,10 +1,8 @@
 FROM jhamrick/oauthenticator
 
-# Set up dockerspawner
+# Install dockerspawner
 RUN pip3 install docker-py
-ADD dockerspawner /srv/dockerspawner
-WORKDIR /srv/dockerspawner
-RUN python3 setup.py install
+RUN pip3 install git+git://github.com/jupyter/dockerspawner.git
 
 # Add variable to allow connecting to the docker host
 ENV DOCKER_HOST unix://docker.sock
