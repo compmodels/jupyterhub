@@ -1,29 +1,32 @@
 # Configuration file for Jupyter Hub
-
 c = get_config()
-
-c.JupyterHubApp.log_level = 10
-c.JupyterHubApp.authenticator_class = 'oauthenticator.LocalGitHubOAuthenticator'
-c.JupyterHubApp.spawner_class = 'dockerspawner.SystemUserSpawner'
-
-# The docker instances need access to the Hub, so the default loopback port doesn't work:
-from IPython.utils.localinterfaces import public_ips
-c.JupyterHubApp.hub_ip = public_ips()[0]
-
-c.Authenticator.whitelist = whitelist = set()
-c.JupyterHubApp.admin_users = admin = set()
-c.SystemUserSpawner.user_ids = userids = dict()
 
 import os
 import sys
 
-join = os.path.join
+# Base configuration
+c.JupyterHubApp.log_level = 10
+c.JupyterHubApp.admin_users = admin = set()
 
-here = os.path.dirname(__file__)
-root = os.environ.get('OAUTHENTICATOR_DIR', here)
+# Configure the authenticator
+c.JupyterHubApp.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
+c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
+c.Authenticator.whitelist = whitelist = set()
+
+# Configure the spawner
+c.JupyterHubApp.spawner_class = 'dockerspawner.SystemUserSpawner'
+c.SystemUserSpawner.user_ids = userids = dict()
+
+# The docker instances need access to the Hub, so the default loopback port
+# doesn't work:
+from IPython.utils.localinterfaces import public_ips
+c.JupyterHubApp.hub_ip = public_ips()[0]
+
+# Add users to the admin list, the whitelist, and also record their user ids
+root = os.environ.get('OAUTHENTICATOR_DIR', os.path.dirname(__file__))
 sys.path.insert(0, root)
 
-with open(join(root, 'userlist')) as f:
+with open(os.path.join(root, 'userlist')) as f:
     for line in f:
         if not line:
             continue
@@ -34,13 +37,3 @@ with open(join(root, 'userlist')) as f:
         if len(parts) > 1 and parts[1] == 'admin':
             admin.add(name)
 
-c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
-
-# ssl config
-ssl = join(root, 'ssl')
-keyfile = join(ssl, 'ssl.key')
-certfile = join(ssl, 'ssl.cert')
-if os.path.exists(keyfile):
-    c.JupyterHubApp.ssl_key = keyfile
-if os.path.exists(certfile):
-    c.JupyterHubApp.ssl_cert = certfile
