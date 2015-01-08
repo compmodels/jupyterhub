@@ -22,11 +22,11 @@ following contents:
     FROM jhamrick/jupyterhub
 
 Additionally, create a `userlist` file that has usernames, user ids, and admin
-priviliges, like so:
+privileges, like so:
 
-    jhamrick:1002 admin
-    aphacker:1003
-    bbitdiddle:1004
+    jhamrick admin
+    aphacker
+    bbitdiddle
 
 Then, build the deployment image:
 
@@ -49,6 +49,13 @@ callback URL is:
 Where `[your-host]` is where your server will be running. Such as
 `example.com:8000`.
 
+Start the [restuser](https://github.com/minrk/restuser) service on the host:
+
+    python3 /path/to/restuser.py --socket=/var/run/restuser.sock
+
 Finally, run JupyterHub with:
 
-    docker run -d --env-file=env --net=host --name jupyterhub -v /var/run/docker.sock:/docker.sock jhamrick/jupyterhub:deploy
+    docker run -d --env-file=env --net=host --name jupyterhub \
+      -v /var/run/docker.sock:/docker.sock \
+      -v /var/run/restuser.sock:/restuser.sock \
+      jhamrick/jupyterhub:deploy
