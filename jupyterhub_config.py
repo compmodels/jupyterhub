@@ -9,13 +9,13 @@ c.JupyterHub.log_level = 10
 c.JupyterHub.admin_users = admin = set()
 
 # Configure the authenticator
-c.JupyterHub.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
-c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
+c.JupyterHub.authenticator_class = 'docker_oauth.DockerOAuthenticator'
+c.DockerOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
+c.DockerOAuthenticator.create_system_users = True
 c.Authenticator.whitelist = whitelist = set()
 
 # Configure the spawner
 c.JupyterHub.spawner_class = 'dockerspawner.SystemUserSpawner'
-c.SystemUserSpawner.user_ids = userids = dict()
 c.SystemUserSpawner.container_image = 'jhamrick/systemuser'
 
 # The docker instances need access to the Hub, so the default loopback port
@@ -29,12 +29,11 @@ sys.path.insert(0, root)
 
 with open(os.path.join(root, 'userlist')) as f:
     for line in f:
-        if not line:
+        if line.isspace():
             continue
         parts = line.split()
-        name, userid = parts[0].split(":")
+        name = parts[0]
         whitelist.add(name)
-        userids[name] = userid
         if len(parts) > 1 and parts[1] == 'admin':
             admin.add(name)
 
