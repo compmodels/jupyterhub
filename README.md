@@ -1,6 +1,12 @@
 JupyterHub docker image for compmodels
 =====================
 
+**NOTE: This repository is no longer used and is left for reference
+purposes only. The docker image built from this repository is now
+built in the
+[compmodels/jupyterhub-deploy](https://github.com/compmodels/jupyterhub-deploy)
+repository instead, through an Ansible configuration.**
+
 This is a configuration of JupyterHub that runs inside a docker container, uses
 GitHub OAuth for authentication, and spawns additional docker containers with
 user notebook servers.
