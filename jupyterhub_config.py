@@ -7,6 +7,7 @@ import sys
 # Base configuration
 c.JupyterHub.log_level = 10
 c.JupyterHub.admin_users = admin = set()
+c.JupyterHub.db_url = 'sqlite:////srv/jupyterhub_db/jupyterhub.sqlite'
 
 # Configure the authenticator
 c.JupyterHub.authenticator_class = 'docker_oauth.DockerOAuthenticator'
@@ -36,4 +37,3 @@ with open(os.path.join(root, 'userlist')) as f:
         whitelist.add(name)
         if len(parts) > 1 and parts[1] == 'admin':
             admin.add(name)
-
