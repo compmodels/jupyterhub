@@ -15,8 +15,14 @@ RUN /usr/local/bin/pip3 install git+git://github.com/ryanlovett/jh-google-oauthe
 ENV DOCKER_HOST https://127.0.0.1:2376
 
 # add the userlist, spawner, and authenticator
-ADD swarmspawner.py /srv/jupyterhub/swarmspawner.py
-ADD docker_oauth.py /srv/jupyterhub/docker_oauth.py
+RUN mkdir /srv/jupyterhub_config
+WORKDIR /srv/jupyterhub_config
+ADD swarmspawner.py /srv/jupyterhub_config/swarmspawner.py
+ADD docker_oauth.py /srv/jupyterhub_config/docker_oauth.py
+ADD jupyterhub_config.py /srv/jupyterhub_config/jupyterhub_config.py
 
 # create /srv/jupyterhub_users directory (which is where we'll mount the userlist)
 RUN mkdir /srv/jupyterhub_users
+
+# set the working directory and the command
+ENTRYPOINT ["jupyterhub"]

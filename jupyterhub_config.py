@@ -2,6 +2,8 @@
 c = get_config()
 
 import os
+import sys
+sys.path.insert(0, '/srv/jupyterhub_config')
 
 # Base configuration
 c.JupyterHub.log_level = "INFO"
