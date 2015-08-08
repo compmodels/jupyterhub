@@ -11,9 +11,6 @@ RUN /usr/local/bin/pip3 install docker-py
 RUN /usr/local/bin/pip3 install git+git://github.com/jupyter/dockerspawner.git
 RUN /usr/local/bin/pip3 install git+git://github.com/ryanlovett/jh-google-oauthenticator.git
 
-# Add variable to allow connecting to the docker swarm
-ENV DOCKER_HOST https://127.0.0.1:2376
-
 # add the userlist, spawner, and authenticator
 RUN mkdir /srv/jupyterhub_config
 WORKDIR /srv/jupyterhub_config
@@ -24,5 +21,12 @@ ADD jupyterhub_config.py /srv/jupyterhub_config/jupyterhub_config.py
 # create /srv/jupyterhub_users directory (which is where we'll mount the userlist)
 RUN mkdir /srv/jupyterhub_users
 
-# set the working directory and the command
-ENTRYPOINT ["jupyterhub"]
+# we need to expose ports for the hub api and for the proxy api
+EXPOSE 8080
+EXPOSE 8001
+
+# environment variable for swarm
+ENV DOCKER_HOST https://swarm:2375
+
+# run jupyterhub
+ENTRYPOINT ["jupyterhub", "-f", "/srv/jupyterhub_config/jupyterhub_config.py"]
