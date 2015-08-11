@@ -15,9 +15,6 @@ class SwarmSpawner(SystemUserSpawner):
 
     container_ip = '0.0.0.0'
 
-    def _user_id_default(self):
-        return 2000
-
     @gen.coroutine
     def lookup_node_name(self):
         """Find the name of the swarm node that the container is running on."""
