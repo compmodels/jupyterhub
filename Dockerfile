@@ -11,6 +11,10 @@ RUN /usr/local/bin/pip3 install docker-py
 RUN /usr/local/bin/pip3 install git+git://github.com/jupyter/dockerspawner.git
 RUN /usr/local/bin/pip3 install git+git://github.com/ryanlovett/jh-google-oauthenticator.git
 
+# Install psycopg2
+RUN apt-get -y install libpq-dev
+RUN /usr/local/bin/pip3 install psycopg2
+
 # add the userlist, spawner, and authenticator
 RUN mkdir /srv/jupyterhub_config
 WORKDIR /srv/jupyterhub_config

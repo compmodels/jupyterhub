@@ -7,7 +7,13 @@ sys.path.insert(0, '/srv/jupyterhub_config')
 
 # Base configuration
 c.JupyterHub.log_level = "INFO"
-c.JupyterHub.db_url = 'sqlite:////srv/jupyterhub_db/jupyterhub.sqlite'
+c.JupyterHub.db_url = "postgresql://{}:{}@{}:{}/{}".format(
+    os.environ['JPY_DB_USER'],
+    os.environ['JPY_DB_PASSWORD'],
+    os.environ['POSTGRES_PORT_5432_TCP_ADDR'],
+    os.environ['POSTGRES_PORT_5432_TCP_PORT'],
+    os.environ['JPY_DB_NAME']
+)
 c.JupyterHub.admin_access = True
 
 # Configure the authenticator
