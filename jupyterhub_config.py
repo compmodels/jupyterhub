@@ -32,7 +32,7 @@ c.DockerSpawner.container_image = 'compmodels/systemuser'
 c.DockerSpawner.tls_cert = os.environ['DOCKER_TLS_CERT']
 c.DockerSpawner.tls_key = os.environ['DOCKER_TLS_KEY']
 c.DockerSpawner.remove_containers = True
-c.DockerSpawner.volumes = {'/srv/nbgrader': '/srv/nbgrader'}
+c.DockerSpawner.volumes = {os.environ['NBGRADER_EXCHANGE']: os.environ['NBGRADER_EXCHANGE']}
 
 # The docker instances need access to the Hub, so the default loopback port
 # doesn't work. We need to tell the hub to listen on 0.0.0.0 because it's in a
