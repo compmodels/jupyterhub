@@ -13,7 +13,6 @@ RUN /usr/local/bin/pip3 install git+git://github.com/ryanlovett/jh-google-oauthe
 
 # Install psycopg2
 RUN apt-get update
-RUN apt-get -y install libssl-dev
 RUN apt-get -y install libpq-dev
 RUN /usr/local/bin/pip3 install psycopg2
 
