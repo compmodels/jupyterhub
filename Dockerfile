@@ -4,17 +4,17 @@ MAINTAINER Jessica Hamrick <jhamrick@berkeley.edu>
 
 # We need to update pip, otherwise the version of requests that
 # is installed by dockerspawner breaks things.
-RUN pip3 install --upgrade pip
+RUN pip install --upgrade pip
 
 # Install dockerspawner and oauthenticator
-RUN /usr/local/bin/pip3 install docker-py
-RUN /usr/local/bin/pip3 install git+git://github.com/jupyter/dockerspawner.git
-RUN /usr/local/bin/pip3 install git+git://github.com/ryanlovett/jh-google-oauthenticator.git
+RUN pip install docker-py
+RUN pip install git+git://github.com/jupyter/dockerspawner.git
+RUN pip install git+git://github.com/jupyter/oauthenticator.git
 
 # Install psycopg2
 RUN apt-get update
 RUN apt-get -y install libpq-dev
-RUN /usr/local/bin/pip3 install psycopg2
+RUN pip install psycopg2
 
 # add the userlist, spawner, and authenticator
 RUN mkdir /srv/jupyterhub_config
