@@ -15,6 +15,7 @@ c.JupyterHub.db_url = "postgresql://{}:{}@{}:{}/{}".format(
     os.environ['JPY_DB_NAME']
 )
 c.JupyterHub.admin_access = True
+c.JupyterHub.confirm_no_ssl = True
 
 # Configure the authenticator
 c.JupyterHub.authenticator_class = 'docker_oauth.DockerOAuthenticator'
