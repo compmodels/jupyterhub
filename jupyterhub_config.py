@@ -19,8 +19,8 @@ c.JupyterHub.admin_access = True
 # Configure the authenticator
 c.JupyterHub.authenticator_class = 'docker_oauth.DockerOAuthenticator'
 c.GoogleOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
-c.GoogleOAuthenticator.oauth_client_id = os.environ['OAUTH_CLIENT_ID']
-c.GoogleOAuthenticator.oauth_client_secret = os.environ['OAUTH_CLIENT_SECRET']
+c.GoogleOAuthenticator.client_id = os.environ['OAUTH_CLIENT_ID']
+c.GoogleOAuthenticator.client_secret = os.environ['OAUTH_CLIENT_SECRET']
 c.GoogleOAuthenticator.hosted_domain = os.environ['HOSTED_DOMAIN']
 c.LocalAuthenticator.create_system_users = True
 c.Authenticator.admin_users = admin = set()
