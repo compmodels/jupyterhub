@@ -28,12 +28,13 @@ c.Authenticator.admin_users = admin = set()
 c.Authenticator.whitelist = whitelist = set()
 
 # Configure the spawner
-c.JupyterHub.spawner_class = 'swarmspawner.SwarmSpawner'
+c.JupyterHub.spawner_class = 'dockerspawner.SystemUserSpawner'
 c.DockerSpawner.container_image = 'compmodels/systemuser'
 c.DockerSpawner.tls_cert = os.environ['DOCKER_TLS_CERT']
 c.DockerSpawner.tls_key = os.environ['DOCKER_TLS_KEY']
 c.DockerSpawner.remove_containers = True
 c.DockerSpawner.volumes = {os.environ['NBGRADER_EXCHANGE']: os.environ['NBGRADER_EXCHANGE']}
+c.DockerSpawner.extra_host_config = {'mem_limit': '1g'}
 
 # The docker instances need access to the Hub, so the default loopback port
 # doesn't work. We need to tell the hub to listen on 0.0.0.0 because it's in a
