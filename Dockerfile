@@ -7,7 +7,7 @@ MAINTAINER Jessica Hamrick <jhamrick@berkeley.edu>
 RUN pip install --upgrade pip
 
 # Install dockerspawner and oauthenticator
-RUN pip install docker-py
+RUN pip install docker-py==1.9.0
 RUN pip install git+git://github.com/jupyter/dockerspawner.git
 RUN pip install git+git://github.com/jupyter/oauthenticator.git
 
