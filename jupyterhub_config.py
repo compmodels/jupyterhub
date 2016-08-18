@@ -28,7 +28,7 @@ c.Authenticator.admin_users = admin = set()
 c.Authenticator.whitelist = whitelist = set()
 
 # Configure the spawner
-c.JupyterHub.spawner_class = 'dockerspawner.SystemUserSpawner'
+c.JupyterHub.spawner_class = 'systemuserspawner.SystemUserSpawner'
 c.DockerSpawner.container_image = 'compmodels/systemuser'
 c.DockerSpawner.tls_cert = os.environ['DOCKER_TLS_CERT']
 c.DockerSpawner.tls_key = os.environ['DOCKER_TLS_KEY']
