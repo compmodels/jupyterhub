@@ -63,6 +63,9 @@ class DockerAuthenticator(LocalAuthenticator):
         user.state['user_id'] = info['uid']
         self.db.commit()
 
+        # update the state in the spawner, so that it knows the user id, etc.
+        user.spawner.load_state(user.state)
+
 
 class DockerOAuthenticator(DockerAuthenticator, GoogleOAuthenticator):
     """A version that mixes in local system user creation from within a
